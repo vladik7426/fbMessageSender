@@ -10,7 +10,7 @@ from selenium.webdriver.common.proxy import ProxyType
 
 from config import facebook_settings
 
-cookie_dicts: List[dict] =[
+cookie_dicts: List[dict] = [
     {
         'name': 'c_user',
         'value': facebook_settings['cookie']['c_user'],
@@ -41,17 +41,10 @@ cookie_dicts: List[dict] =[
     }
 ]
 
-DRIVER = None
-
 logger = Logger('selenium_utils')
 
 
-def init_driver() -> None:
-    global DRIVER
-
-    if DRIVER is not None:
-        logger.warning("Driver already exists when initialization new")
-
+def init_driver() -> webdriver.Edge:
     options = webdriver.EdgeOptions()
     options.proxy = Proxy({
         'proxyType': ProxyType.MANUAL,
@@ -61,18 +54,17 @@ def init_driver() -> None:
         'noProxy': '',
     })
 
-    DRIVER = webdriver.Edge(options=options)
+    driver = webdriver.Edge(options=options)
 
-    DRIVER.get("https://facebook.com")
+    driver.get("https://facebook.com")
 
     for cookie in cookie_dicts:
-        DRIVER.add_cookie(cookie)
+        driver.add_cookie(cookie)
+
+    return driver
 
 
 def get_driver() -> webdriver.Edge | None:
-    global DRIVER
+    driver = init_driver()
 
-    if DRIVER is None:
-        init_driver()
-
-    return DRIVER
+    return driver
