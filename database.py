@@ -19,8 +19,8 @@ def get_connection() -> Connection:
 
         if CONNECTION is None:
             CONNECTION = mysql_connect(**database_settings['credentials'],
-                                        autocommit=True,
-                                        charset='utf8mb4')
+                                       autocommit=True,
+                                       charset='utf8mb4')
             CONNECTION.autocommit(True)
 
         return CONNECTION
@@ -45,8 +45,13 @@ def get_facebook_group_rows() -> tuple[tuple[Any, ...], ...]:
 
 
 def set_task_status(task_id, status):
-    execute_query(
-        f"UPDATE {database_settings['table-names']['tasks']} SET status = '{status}' WHERE id={task_id}")
+    queries = (
+        f"UPDATE {database_settings['table-names']['queues']} SET status='{status}' WHERE task_id={task_id}",
+        f"UPDATE {database_settings['table-names']['queue_tasks']} SET status='{status}' WHERE task_id={task_id}",
+        f"UPDATE {database_settings['table-names']['tasks']} SET status='{status}' WHERE id={task_id}",
+    )
+    for query in queries:
+        execute_query(query)
 
 
 def execute_query(query) -> Connection:

@@ -19,7 +19,9 @@ database_settings = {
         'database': 'default',
     },
     'table-names': {
+        'queues': 'queues',
+        'queue_tasks': 'queue_tasks',
         'tasks': 'tasks',
-        'groups': 'facebook_groups',
+        'task_facebook_groups': 'task_facebook_groups',
     }
 }
