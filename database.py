@@ -1,7 +1,7 @@
 """This module handles the interaction with the database. It includes functions for retrieving new records from the
 database."""
 from logging import Logger
-from typing import List, Final, Tuple, Any
+from typing import Any, Tuple, Generator
 
 from pymysql import connect as mysql_connect
 from pymysql.connections import Connection
@@ -28,12 +28,25 @@ def get_connection() -> Connection:
         return get_connection()
 
 
+def get_queue_rows(limit: int = 100) -> tuple[tuple[Any, ...], ...]:
+    conn = execute_query(
+        f"SELECT * FROM {database_settings['table-names']['queues']} WHERE status IS NULL LIMIT {limit}")
+
+    return conn.cursor().fetchall()
+
+
+def get_facebook_group_ids(queue_id: int, task_id: int) -> Generator[int]:
+    conn = execute_query(
+        "SELECT * FROM {database_settings['table-names']['task_facebook_groups']}"
+        f"WHERE queue_id={queue_id} AND task_id={task_id}")
+
+    return (int(row[3]) for row in conn.cursor().fetchall())  # getting facebook_id column from every row
+
+
 def get_task_rows() -> tuple[tuple[Any, ...], ...]:
     conn = execute_query(f"SELECT * FROM {database_settings['table-names']['tasks']}")
 
-    rows = conn.cursor().fetchall()
-
-    return rows
+    return conn.cursor().fetchall()
 
 
 def get_facebook_group_rows() -> tuple[tuple[Any, ...], ...]:

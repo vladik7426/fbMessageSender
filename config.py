@@ -2,6 +2,7 @@
 project's settings, such as database credentials, API keys, or other configurable options."""
 
 THREAD_COUNT = 5
+QUEUE_MAX_LEN = 10
 
 facebook_settings = {
     "cookie": {

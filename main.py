@@ -1,7 +1,8 @@
 from queue import Queue
 from threading import Thread
 
-from config import THREAD_COUNT
+import database
+from config import THREAD_COUNT, QUEUE_MAX_LEN
 from utils import selenium_utils
 from utils.database_types import FBGroupTaskRowPair
 
@@ -10,9 +11,10 @@ def handle_thread(queue):
     driver = selenium_utils.get_driver()
     while True:
         if queue.qsize() > 0:
-            queue_value = queue.get_pair()
-            if isinstance(queue_value, FBGroupTaskRowPair):
-                fb_group, task_row = queue_value.get_pair()
+            queue_values: list[FBGroupTaskRowPair] = queue.get()
+            for queue_value in queue_values:
+                if isinstance(queue_values, FBGroupTaskRowPair):
+                    fb_group, task_row = queue_value.get_pair()
 
 
 def main():
@@ -23,7 +25,10 @@ def main():
         thread.start()
 
     while True:
-        pass
+        queue_can_contain = QUEUE_MAX_LEN - queue.qsize()
+        if queue_can_contain > 0:
+            for row in database.get_queue_rows(limit=queue_can_contain):
+                pass
 
 
 if __name__ == '__main__':

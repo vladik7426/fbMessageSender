@@ -1,5 +1,4 @@
 class TaskStatus:
-    WAITING = 'WAITING'
     DOING = 'DOING'
     DONE = 'DONE'
     ERROR = 'ERROR'
