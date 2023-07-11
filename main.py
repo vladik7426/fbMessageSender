@@ -1,7 +1,7 @@
 from queue import Queue
 from threading import Thread
 
-from config import MAX_THREAD_COUNT
+from config import THREAD_COUNT
 from utils import selenium_utils
 from utils.database_types import FBGroupTaskRowPair
 
@@ -17,7 +17,7 @@ def handle_thread(queue):
 
 def main():
     queue = Queue()
-    threads = (Thread(target=handle_thread, args=(queue,)) for _ in range(MAX_THREAD_COUNT))
+    threads = (Thread(target=handle_thread, args=(queue,)) for _ in range(THREAD_COUNT))
 
     for thread in threads:
         thread.start()
