@@ -2,6 +2,7 @@ class TaskStatus:
     WAITING = 'WAITING'
     DOING = 'DOING'
     DONE = 'DONE'
+    ERROR = 'ERROR'
 
 
 class TaskRow:
@@ -26,3 +27,15 @@ class FBGroupRow:
         self.facebook_search_id = group_row[5]
         self.is_run = group_row[6]
 
+
+class FBGroupTaskRowPair:
+    def __init__(self, fb_group: FBGroupRow, task_row: TaskRow):
+        if isinstance(fb_group, FBGroupRow) and isinstance(task_row, TaskRow):
+            self._fb_group = fb_group
+            self._task_row = task_row
+        else:
+            raise RuntimeError("FBGroupTaskPair: cannot init pair with given types: "
+                               f"{type(fb_group)} and {type(task_row)}")
+
+    def get_pair(self) -> tuple[FBGroupRow, TaskRow]:
+        return self._fb_group, self._task_row
