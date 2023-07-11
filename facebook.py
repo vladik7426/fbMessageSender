@@ -4,7 +4,7 @@ from time import sleep
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 
-import selenium_utils
+from utils import selenium_utils
 from utils.database_types import TaskRow
 
 

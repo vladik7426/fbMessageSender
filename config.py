@@ -1,6 +1,8 @@
 """This file is used for storing project configurations. You can define variables or constants related to the
 project's settings, such as database credentials, API keys, or other configurable options."""
 
+MAX_THREAD_COUNT = 5
+
 facebook_settings = {
     "cookie": {
         'c_user': '100093921954323',
