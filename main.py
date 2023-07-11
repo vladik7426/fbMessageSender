@@ -2,21 +2,23 @@ from threading import Thread
 
 import database
 import facebook
-from utils import format_task_row, TaskStatus
+from utils.database_types import TaskRow, TaskStatus
 
 
-def send_ad(task: dict):
-    facebook.send_messages_with_image(task)
+def send_ad(task: TaskRow):
+    links = ()
 
-    database.set_task_status(task['id'], TaskStatus.DONE)
+    facebook.send_messages_with_image(links, task)
+
+    database.set_task_status(task.id, TaskStatus.DONE)
 
 
 def main():
     while task_rows := database.get_task_rows():
         for task_row in task_rows:
-            task = format_task_row(task_row)
-            if task['status'] == TaskStatus.WAITING:
-                database.set_task_status(task['id'], TaskStatus.DOING)
+            task = TaskRow(task_row)
+            if task.status == TaskStatus.WAITING:
+                database.set_task_status(task.id, TaskStatus.DOING)
                 Thread(target=send_ad, args=(task,)).start()
 
 

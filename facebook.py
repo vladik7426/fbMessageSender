@@ -1,20 +1,14 @@
-import asyncio
 import os
 from time import sleep
 
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 
-import database
 import selenium_utils
+from utils.database_types import TaskRow
 
 
-def send_messages_with_image(task: dict):
-    links = (row[2] for row in database.get_facebook_group_rows())
-
-    message = task['ad']
-    image_src = task['photo']
-
+def send_messages_with_image(links: tuple | list, task: TaskRow):
     driver = selenium_utils.get_driver()
     for link in links:
         # Locate driver to the link
@@ -39,16 +33,16 @@ def send_messages_with_image(task: dict):
                 # Write message text and send the image
                 text_area = driver.find_element(By.CSS_SELECTOR, "._5rpu[role=textbox]")
 
-                text_area.send_keys(message)
+                text_area.send_keys(task.ad)
 
-                if os.path.isfile(image_src):
+                if os.path.isfile(task.photo):
                     assets_element = driver.find_element(By.CSS_SELECTOR, "[class='x6s0dn4 x1jx94hy x1n2xptk xkbpzyx xdppsyt "
                                                                         "x1rr5fae x1lq5wgf xgqcy7u x30kzoy x9jhf4c xev17xk "
                                                                         "x9f619 x78zum5 x1qughib xktsk01 x1d52u69 x1y1aw1k "
                                                                         "x1sxyh0 xwib8y2 xurb0ha']")
 
                     image_input = assets_element.find_element(By.CSS_SELECTOR, "input")
-                    image_input.send_keys(image_src)
+                    image_input.send_keys(task.photo)
 
                 break
             except NoSuchElementException:
