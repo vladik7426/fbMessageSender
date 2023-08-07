@@ -15,15 +15,19 @@ def handle_thread(queue):
             queue_value: FBGroupTaskRowPair = queue.get()
             if isinstance(queue_value, FBGroupTaskRowPair):
                 fb_groups, task_row = queue_value.get_pair()
-                for fb_group in fb_groups:
-                    try:
-                        facebook.send_ad_to_group(driver, fb_group, task_row)
+                execute_task(driver, queue_value, task_row, fb_groups)
 
-                        database.set_queue_status_by_queue_id(queue_value.get_queue_id(), TaskStatus.DONE)
-                        database.set_task_status_by_id(task_row.id, TaskStatus.DONE)
-                    except:
-                        database.set_queue_status_by_queue_id(queue_value.get_queue_id(), TaskStatus.ERROR)
-                        database.set_task_status_by_id(task_row.id, TaskStatus.ERROR)
+
+def execute_task(driver, queue_value, task_row, fb_groups):
+    for fb_group in fb_groups:
+        try:
+            facebook.send_ad_to_group(driver, fb_group, task_row)
+
+            database.set_queue_status_by_queue_id(queue_value.get_queue_id(), TaskStatus.DONE)
+            database.set_task_status_by_id(task_row.id, TaskStatus.DONE)
+        except Exception:
+            database.set_queue_status_by_queue_id(queue_value.get_queue_id(), TaskStatus.ERROR)
+            database.set_task_status_by_id(task_row.id, TaskStatus.ERROR)
 
 
 def main():
