@@ -1,7 +1,16 @@
+from typing import Tuple, List
+
+
 class TaskStatus:
     DOING = 'DOING'
     DONE = 'DONE'
     ERROR = 'ERROR'
+
+
+class QueueRow:
+    def __init__(self, queue_row: tuple | list):
+        self.id = queue_row[0]
+        self.status = queue_row[1]
 
 
 class TaskRow:
@@ -12,12 +21,10 @@ class TaskRow:
         self.created_at = task_row[3]
         self.updated_at = task_row[4]
         self.photo = task_row[5]
-        self.title = task_row[6]
-        self.order = task_row[7]
 
 
 class FBGroupRow:
-    def __init__(self, group_row: tuple | list):
+    def __init__(self, group_row: tuple | list) -> object:
         self.id = group_row[0]
         self.title = group_row[1]
         self.url = group_row[2]
@@ -28,13 +35,17 @@ class FBGroupRow:
 
 
 class FBGroupTaskRowPair:
-    def __init__(self, fb_group: FBGroupRow, task_row: TaskRow):
-        if isinstance(fb_group, FBGroupRow) and isinstance(task_row, TaskRow):
-            self._fb_group = fb_group
+    def __init__(self, fb_groups: list[FBGroupRow], task_row: TaskRow, queue_id=None):
+        if isinstance(fb_groups, list | tuple) and isinstance(task_row, TaskRow):
+            self._fb_groups = fb_groups
             self._task_row = task_row
+            self._queue_id = queue_id
         else:
             raise RuntimeError("FBGroupTaskPair: cannot init pair with given types: "
-                               f"{type(fb_group)} and {type(task_row)}")
+                               f"{type(fb_groups)} and {type(task_row)}")
 
-    def get_pair(self) -> tuple[FBGroupRow, TaskRow]:
-        return self._fb_group, self._task_row
+    def get_pair(self) -> tuple[list[FBGroupRow], TaskRow]:
+        return self._fb_groups, self._task_row
+
+    def get_queue_id(self) -> int:
+        return self._queue_id

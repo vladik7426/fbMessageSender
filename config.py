@@ -7,7 +7,7 @@ QUEUE_MAX_LEN = 10
 facebook_settings = {
     "cookie": {
         'c_user': '100093921954323',
-        'xs': '3%3AnUkxAmLZLB63wg%3A2%3A1688063096%3A-1%3A-1%3A%3AAcVFlwNmSRX6GXkw9UunXYOjujL2M8Mgdq7SyBKuoQ',
+        'xs': '17%3A25Ii_fJNjaWa0w%3A2%3A1689174300%3A-1%3A-1%3A%3AAcXFyihurwp70p1wYfppIv7ozOsGGMWTxnoeLapl2Q',
     },
     "proxy": "",
 }
@@ -17,12 +17,13 @@ database_settings = {
         'user': 'root',
         'password': '13245',
         'host': 'localhost',
-        'database': 'default',
+        'database': 'pup',
     },
     'table-names': {
         'queues': 'queues',
         'queue_tasks': 'queue_tasks',
         'tasks': 'tasks',
         'task_facebook_groups': 'task_facebook_groups',
+        'facebook_groups': 'facebook_groups',
     }
 }
