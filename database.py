@@ -10,24 +10,13 @@ from pymysql.cursors import Cursor
 from config import database_settings
 from utils.database_types import QueueRow, TaskRow, FBGroupRow
 
-CONNECTION: Connection | None = None
-
 logger = Logger("database")
 
 
 def get_connection() -> Connection:
-    try:
-        global CONNECTION
-
-        if CONNECTION is None:
-            CONNECTION = mysql_connect(**database_settings['credentials'],
-                                       autocommit=True,
-                                       charset='utf8mb4')
-            CONNECTION.autocommit(True)
-
-        return CONNECTION
-    except Exception:
-        return get_connection()
+    return mysql_connect(**database_settings['credentials'],
+                         autocommit=True,
+                         charset='utf8mb4')
 
 
 def get_queue_rows(limit: int = 1000) -> list[QueueRow]:
@@ -57,6 +46,7 @@ def get_queue_tasks_by_id(queue_id) -> list[TaskRow]:
 
         task_rows.append(TaskRow(cursor.fetchone()))
     return task_rows
+
 
 def get_facebook_groups(queue_id: int, task_id: int, limit=1000) -> list[FBGroupRow]:
     cursor = execute_query(
