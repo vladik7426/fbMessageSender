@@ -8,12 +8,18 @@ from utils.database_types import TaskRow, FBGroupRow
 def locate_write_button(driver):
     while True:
         try:
-            write_button_element = driver.find_element(By.CSS_SELECTOR, "div[class^='x1i10hfl']")
+            write_button_element = driver.find_element(By.CSS_SELECTOR, "div[class^='x1i10hfl x6umtig x1b1mbwd "
+                                                                        "xaqea5y xav7gou x9f619 x1ypdohk xe8uvvx "
+                                                                        "xdj266r x11i5rnm xat24cr x1mh8g0r x16tdsg8 "
+                                                                        "x1hl2dhg xggy1nq x87ps6o x1lku1pv x1a2a7pz "
+                                                                        "x6s0dn4 xmjcpbm x107yiy2 xv8uw2v x1tfwpuw "
+                                                                        "x2g32xy x78zum5 x1q0g3np x1iyjqo2 x1nhvcw1 "
+                                                                        "x1n2onr6 xt7dq6l x1ba4aug x1y1aw1k xn6708d "
+                                                                        "xwib8y2 x1ye3gou']")
             write_button_element.click()
             break
         except NoSuchElementException:
             sleep(1)
-
 
 def write_message(driver, task):
     while True:
@@ -47,7 +53,15 @@ def write_message(driver, task):
 def press_submit_button(driver):
     while True:
         try:
-            submit_button = driver.find_element(By.CSS_SELECTOR, "[class^='x9f619 x1ja2u2z x1k90msu']")
+            submit_button = driver.find_element(By.CSS_SELECTOR, "[class^='x9f619 x1n2onr6 x1ja2u2z x78zum5 x2lah0s "
+                                                                 "x1qughib x1qjc9v5 xozqiw3 x1q0g3np x1pi30zi "
+                                                                 "x1swvt13 xyamay9 xcud41i x139jcc6 x4vbgl9 "
+                                                                 "x1rdy4ex'] [class^='x1i10hfl xjbqb8w x6umtig "
+                                                                 "x1b1mbwd xaqea5y xav7gou x1ypdohk xe8uvvx xdj266r "
+                                                                 "x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 "
+                                                                 "xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1o1ewxj x3x9cwd "
+                                                                 "x1e5q0jg x13rtm0m x87ps6o x1lku1pv x1a2a7pz x9f619 "
+                                                                 "x3nfvp2 xdt5ytf xl56j7k x1n2onr6 xh8yej3']")
             submit_button.click()
             sleep(1)
         except NoSuchElementException:
