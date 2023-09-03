@@ -18,12 +18,5 @@ database_settings = {
         'password': '13245',
         'host': 'localhost',
         'database': 'pup',
-    },
-    'table-names': {
-        'queues': 'queues',
-        'queue_tasks': 'queue_tasks',
-        'tasks': 'tasks',
-        'task_facebook_groups': 'task_facebook_groups',
-        'facebook_groups': 'facebook_groups',
     }
 }
