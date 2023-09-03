@@ -84,7 +84,7 @@ def next_account_cookies() -> List[dict]:
 def init_driver() -> webdriver.Edge:
     lock.acquire()
 
-    options = webdriver.EdgeOptions()
+    options = webdriver.ChromeOptions()
     options.proxy = Proxy({
         'proxyType': ProxyType.MANUAL,
         'httpProxy': facebook_settings['proxy'],
@@ -93,7 +93,7 @@ def init_driver() -> webdriver.Edge:
         'noProxy': '',
     })
 
-    driver = webdriver.Edge(options=options)
+    driver = webdriver.Chrome(options=options)
 
     driver.get("https://facebook.com")
 
