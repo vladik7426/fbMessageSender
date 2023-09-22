@@ -1,6 +1,3 @@
-from typing import Tuple, List
-
-
 class TaskStatus:
     DOING = 'DOING'
     DONE = 'DONE'
@@ -24,7 +21,7 @@ class TaskRow:
 
 
 class FBGroupRow:
-    def __init__(self, group_row: tuple | list) -> object:
+    def __init__(self, group_row: tuple | list):
         self.id = group_row[0]
         self.title = group_row[1]
         self.url = group_row[2]

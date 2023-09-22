@@ -3,13 +3,14 @@ from threading import Thread
 
 import database
 import facebook
+from FBDriver import FBDriver
 from config import THREAD_COUNT, QUEUE_MAX_LEN
-from utils import selenium_utils
+from utils import fb_accounts
 from utils.database_types import FBGroupTaskRowPair, TaskStatus
 
 
 def handle_thread(queue):
-    driver = selenium_utils.get_driver()
+    driver = FBDriver()
     while True:
         if queue.qsize() > 0:
             queue_value: FBGroupTaskRowPair = queue.get()

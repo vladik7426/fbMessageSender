@@ -8,14 +8,14 @@ from pymysql import connect as mysql_connect, ProgrammingError
 from pymysql.connections import Connection
 from pymysql.cursors import Cursor
 
-from config import database_settings
+from config import database_config
 from utils.database_types import QueueRow, TaskRow, FBGroupRow
 
 logger = Logger("database")
 
 
 def get_connection() -> Connection:
-    return mysql_connect(**database_settings['credentials'],
+    return mysql_connect(**database_config.credentials.as_dict(),
                          autocommit=True,
                          charset='utf8mb4')
 
