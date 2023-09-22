@@ -9,7 +9,7 @@ from selenium.webdriver import Proxy
 from selenium.webdriver.common.proxy import ProxyType
 
 import database
-from config import facebook_settings
+from config import facebook_config
 
 from threading import Lock
 
@@ -87,9 +87,9 @@ def init_driver() -> webdriver.Edge:
     options = webdriver.ChromeOptions()
     options.proxy = Proxy({
         'proxyType': ProxyType.MANUAL,
-        'httpProxy': facebook_settings['proxy'],
-        'ftpProxy': facebook_settings['proxy'],
-        'sslProxy': facebook_settings['proxy'],
+        'httpProxy': facebook_config['proxy'],
+        'ftpProxy': facebook_config['proxy'],
+        'sslProxy': facebook_config['proxy'],
         'noProxy': '',
     })
 
